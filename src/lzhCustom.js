@@ -54,6 +54,11 @@ export const initBeautify = function() {
                 }, 510);
             }
         });
+        // 展示侧边栏
+        var $body = $('body');
+        $btnTool.find('.show-side-bar').click(function(e) {
+            $body.toggleClass('show-side-bar');
+        })
         // 去登录
         $(document).on('click', '.lzh-login-panel', function (e) {
             $('.login_tips').find('a').eq(0).trigger('click');
