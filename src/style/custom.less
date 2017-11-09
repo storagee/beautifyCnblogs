@@ -112,7 +112,6 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 30px;
   width: 680px;
   height: 100%;
   margin: 0 auto;
@@ -122,24 +121,24 @@ body {
   background: #ffffff;
 }
 #main #mainContent .forFlow .day {
-  padding: 30px 0;
-  border-bottom: 1px dashed #d9d9d9;
+  padding: 30px;
+  border-bottom: 1px solid #f0f0f0;
 }
 #main #mainContent .forFlow .day .dayTitle a {
+  display: none;
   font-size: 12px;
   color: #717171;
   text-decoration: none;
 }
 #main #mainContent .forFlow .day .postTitle {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
 }
 #main #mainContent .forFlow .day .postTitle a {
   color: #000;
   text-decoration: none;
 }
 #main #mainContent .forFlow .day .postCon {
-  margin: 26px 0;
+  margin: 26px 0 12px 0;
 }
 #main #mainContent .forFlow .day .postCon .c_b_p_desc {
   font-size: 16px;
@@ -153,9 +152,11 @@ body {
   text-decoration: underline;
 }
 #main #mainContent .forFlow .day .postDesc {
+  margin-top: 0;
   text-align: right;
   font-size: 12px;
   color: #717171;
+  opacity: 0;
 }
 #main #mainContent .forFlow .day .postDesc a {
   color: #3399FF;
@@ -1088,6 +1089,19 @@ body {
     top: -20px;
   }
 }
+
+#main #mainContent #post_detail {
+  padding: 30px;
+}
+
+#main #mainContent #comment_form {
+  padding: 0 30px 30px 30px;
+}
+
+#main #mainContent #blog-comments-placeholder {
+  padding: 0 30px;
+}
+
 #post_detail .reward-tip {
   border-left: 4px solid #F7834B;
   padding-left: 25px;
