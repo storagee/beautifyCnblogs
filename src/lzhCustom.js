@@ -157,11 +157,23 @@ export const initBeautify = function() {
          * 评论框增加 placeholder
          */
         $('#tbCommentBody').attr("placeholder", "添加代码推荐使用右上角的功能键，这样可以高亮 keyword :)");
+        addAvatarAndUserInfo(); // 增加评论头像
+        var count = 0;
+        var intervalId = setInterval(function () {
+            if (count < 5) {
+                addAvatarAndUserInfo(); // 增加评论头像
+                count++;
+            } else {
+                clearInterval(intervalId);
+            }
+        }, 200);
         setTimeout(function(){
             $('#tbCommentBody').attr("placeholder", "添加代码推荐使用右上角的功能键，这样可以高亮 keyword :)");
+            addAvatarAndUserInfo();
         }, 1000);
         setTimeout(function () {
             $('#tbCommentBody').attr("placeholder", "添加代码推荐使用右上角的功能键，这样可以高亮 keyword :)");
+            addAvatarAndUserInfo();
         }, 8000);
 
         /*
@@ -169,5 +181,75 @@ export const initBeautify = function() {
          */
         $('#Header1_HeaderTitle').attr("href", "https://home.cnblogs.com/u/zhihuilai/");
         $('#lnkBlogLogo').attr("href", "https://home.cnblogs.com/u/zhihuilai/");
+
+        /**
+         * 主体颜色
+         */
+        $('head').append('<meta name="theme-color" content="#2175BC">');
     });
+
+    /**
+     * 展示评论头像、修改用户信息位置
+     */
+    function addAvatarAndUserInfo() {
+        var $feedbackItem = $('.feedbackItem');
+        $feedbackItem.each(function (index, item) {
+            var $item = $(item);
+            if($item.find('.custom-avatars').length === 0) {
+                var $feedbackManage = $item.find('.feedbackManage');
+                var $commentDate = $item.find('.comment_date');
+                var $userName = $commentDate.next();
+                $userName.addClass('user-name');
+                var $messageBtn = $userName.next();
+                var userHome = $userName.attr('href');
+                var $avatarSpan = $item.find('.comment_vote').next();
+                var avatarUrl;
+                if($avatarSpan.length !== 0) {
+                    avatarUrl = $avatarSpan.html();
+                } else {
+                    avatarUrl = 'http://pic.cnitblog.com/face/sample_face.gif';
+                }
+                $feedbackManage.after('<a class="custom-avatars" target="_blank" href="' + userHome + '"><img src="' + avatarUrl + '" alt=""></a>')
+                // 调整顺序
+                var $customAvatars = $item.find('.custom-avatars');
+                $messageBtn.insertAfter($customAvatars);
+                $userName.insertAfter($customAvatars);
+                var $layer = $item.find('.layer');
+                var layerOuterHtml = $layer[0].outerHTML;
+                var $layerNextAll = $layer.nextAll();
+                var layerNextAllOuterHtml = '';
+                $layerNextAll.each(function (index, item) {
+                    layerNextAllOuterHtml += item.outerHTML;
+                });
+                $layer.after('<div class="date-wrapper"></div>');
+                $layer.remove();
+                $layerNextAll.remove();
+                var $dateWrapper = $item.find('.date-wrapper');
+                $dateWrapper.append(layerOuterHtml);
+                $dateWrapper.append(layerNextAllOuterHtml);
+                var $feedbackListSubtitle = $item.find('.feedbackListSubtitle');
+                var feedbackListSubtitle = $feedbackListSubtitle.html();
+                var indexOfBrackets = feedbackListSubtitle.indexOf('[]');
+                if(feedbackListSubtitle.length - 10 === indexOfBrackets) {
+                    feedbackListSubtitle = feedbackListSubtitle.slice(0, indexOfBrackets)
+                    $feedbackListSubtitle.empty().append(feedbackListSubtitle);
+                }
+                $item.find('.louzhu').insertBefore($item.find('.sendMsg2This')).html('(作者)');
+                $userName = $item.find('.user-name');
+                $feedbackManage = $item.find('.feedbackManage');
+                $customAvatars = $item.find('.custom-avatars');
+                $layer = $item.find('.layer');
+                console.log($userName, $userName.html());
+                $userName.before('<div class="user-info-wrapper"></div>');
+                var $userInfoWrapper = $item.find('.user-info-wrapper');
+                $userInfoWrapper.append($userInfoWrapper.nextAll());
+                $feedbackManage.after('<div class="avatars-user-info-wrapper"></div>');
+                var $avatarsUserInfoWrapper = $item.find('.avatars-user-info-wrapper');
+                $avatarsUserInfoWrapper
+                    .append($customAvatars)
+                    .append($userInfoWrapper);
+                $layer.html($layer.html().slice(1));
+            }
+        });
+    }
 }
